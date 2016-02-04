@@ -16,17 +16,17 @@ class NewsHooks extends \Controller
 {
 	public function parseAllArticlesHook($arrArticles = array(), $blnAddArchive, $objModule)
 	{
-		$arrArticles = $this->getNewsConfigList($arrArticles, $blnAddArchive, $objModule);
+		$arrArticles = $this->getListGridList($arrArticles, $blnAddArchive, $objModule);
 
 		return $arrArticles;
 	}
 
 	public function parseArticlesHook(&$objTemplate, $arrArticle, $objModule)
 	{
-		$this->getNewsConfigArticle($objTemplate, $arrArticle, $objModule);
+		$this->getListGridArticle($objTemplate, $arrArticle, $objModule);
 	}
 
-	protected function getNewsConfigList($arrArticles, $blnAddArchive, $objModule)
+	protected function getListGridList($arrArticles, $blnAddArchive, $objModule)
 	{
 		if(!$objModule->addListGrid) return $arrArticles;
 
@@ -42,7 +42,7 @@ class NewsHooks extends \Controller
 
 		while($objConfigItems->next())
 		{
-			// skip newslist_item, handled by NewsPlus::getNewsConfigArticle
+			// skip listgrid_news, handled by static::getListGridTicket
 			if($objConfigItems->type == 'listgrid_news')
 			{
 				$arrArticlesList[] = $arrArticles[$idxNews];
@@ -56,7 +56,7 @@ class NewsHooks extends \Controller
 		return $arrArticlesList;
 	}
 
-	protected function getNewsConfigArticle(&$objTemplate, $arrArticle, $objModule)
+	protected function getListGridArticle(&$objTemplate, $arrArticle, $objModule)
 	{
 		if(!$objModule->addListGrid) return;
 
@@ -71,6 +71,7 @@ class NewsHooks extends \Controller
 		// overwrite template
 		$objTemplate->setName($objConfigItems->news_template);
 
+		
 		// overwrite image size
 		if($objTemplate->addImage && $objConfigItems->size != '')
 		{

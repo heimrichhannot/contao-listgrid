@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_listgrid'] = array(
 	(
 		'__selector__' => array('type'),
 		'default'      => '{title_legend},type',
-		'news'     => '{title_legend},type,title;',
+		'news'         => '{title_legend},type,title',
 	),
 	// Fields
 	'fields'   => array(
@@ -142,7 +142,9 @@ class tl_listgrid extends Backend
 	 */
 	public function getListGridConfigurations()
 	{
-		if(!is_array($GLOBALS['LISTGRID_TYPES'])) return array();
+		if (!is_array($GLOBALS['LISTGRID_TYPES'])) {
+			return array();
+		}
 
 		return array_keys($GLOBALS['LISTGRID_TYPES']);
 	}
